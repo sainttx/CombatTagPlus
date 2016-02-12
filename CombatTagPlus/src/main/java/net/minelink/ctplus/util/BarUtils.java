@@ -1,7 +1,6 @@
 package net.minelink.ctplus.util;
 
 import com.connorlinfoot.actionbarapi.ActionBarAPI;
-import me.confuser.barapi.BarAPI;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.inventivetalent.bossbar.BossBarAPI;
@@ -13,8 +12,6 @@ public final class BarUtils {
     public static void init() {
         if (Bukkit.getPluginManager().isPluginEnabled("ActionBarAPI")) {
             handler = Handler.ACTIONBAR_API;
-        } else if (Bukkit.getPluginManager().isPluginEnabled("BarAPI")) {
-            handler = Handler.CONFUSER_BAR_API;
         } else if (Bukkit.getPluginManager().isPluginEnabled("BossBarAPI")) {
             handler = Handler.BOSSBAR_API;
         }
@@ -63,28 +60,6 @@ public final class BarUtils {
             @Override
             public void removeBar(Player player) {
 
-            }
-        },
-
-        CONFUSER_BAR_API {
-            @Override
-            public boolean hasBar(Player player) {
-                return BarAPI.hasBar(player);
-            }
-
-            @Override
-            public void setMessage(Player player, String message, int timeout) {
-                BarAPI.setMessage(player, message, timeout);
-            }
-
-            @Override
-            public void setMessage(Player player, String message, float percent) {
-                BarAPI.setMessage(player, message, percent);
-            }
-
-            @Override
-            public void removeBar(Player player) {
-                BarAPI.removeBar(player);
             }
         },
 

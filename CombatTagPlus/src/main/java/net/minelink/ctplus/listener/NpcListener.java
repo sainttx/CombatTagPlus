@@ -4,6 +4,7 @@ import net.minelink.ctplus.CombatTagPlus;
 import net.minelink.ctplus.Npc;
 import net.minelink.ctplus.event.NpcDespawnEvent;
 import net.minelink.ctplus.event.NpcDespawnReason;
+import net.minelink.ctplus.event.NpcPreSpawnEvent;
 import net.minelink.ctplus.task.SafeLogoutTask;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -54,6 +55,13 @@ public final class NpcListener implements Listener {
         // Kill player if configuration states so
         if (isTagged && plugin.getSettings().instantlyKill()) {
             player.setHealth(0);
+            return;
+        }
+
+        // Call a PreSpawnEvent for other plugins to hook in and cancel
+        NpcPreSpawnEvent preSpawnEvent = new NpcPreSpawnEvent(player);
+        plugin.getServer().getPluginManager().callEvent(preSpawnEvent);
+        if (preSpawnEvent.isCancelled()) {
             return;
         }
 
